@@ -100,6 +100,10 @@ jobs:
         make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
         make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
         make package/index
+        echo >> feeds.conf.default
+        echo 'src-git istore https://github.com/linkease/istore;main' >> feeds.conf.default
+        ./scripts/feeds update istore
+        ./scripts/feeds install -d y -p istore luci-app-stor
 
     - name: Generate Firmware
       id: generate
